@@ -17,7 +17,7 @@ app.get('/repositories', (request, response) => {
 app.post('/repositories', (request, response) => {
   const { title, url, techs } = request.body
 
-  const repo = { id: uuid(), title, url, techs, likes: 0 }
+  const repo = { id: '1', title, url, techs, likes: 0 }
 
   repositories.push(repo)
 
@@ -61,7 +61,31 @@ app.delete('/repositories/:id', (request, response) => {
 })
 
 app.post('/repositories/:id/like', (request, response) => {
-  // TODO
+  const { id } = request.params
+
+  const repoFind = repositories.find(repo => repo.id === id)
+
+  if (!repoFind) {
+    return response.status(400).json({ error: 'Repo not found.' })
+  }
+
+  const repoIndex = repositories.findIndex(repo => repo.id === id)
+
+  const { likes, title, url, techs } = repoFind
+
+  const likeUpdate = likes + 1
+
+  const repo = {
+    id,
+    title,
+    url,
+    techs,
+    likes: likeUpdate,
+  }
+
+  repositories[repoIndex] = repo
+
+  return response.status(200).json(repo)
 })
 
 module.exports = app
