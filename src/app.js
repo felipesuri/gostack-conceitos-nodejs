@@ -17,7 +17,7 @@ app.get('/repositories', (request, response) => {
 app.post('/repositories', (request, response) => {
   const { title, url, techs } = request.body
 
-  const repo = { id: '1', title, url, techs, likes: 0 }
+  const repo = { id: uuid(), title, url, techs, likes: 0 }
 
   repositories.push(repo)
 
