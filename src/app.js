@@ -34,11 +34,16 @@ app.put('/repositories/:id', (request, response) => {
     return response.status(400).json({ error: 'Repo not found.' })
   }
 
+  const repoFind = repositories.find(repo => repo.id === id)
+
+  const { likes } = repoFind
+
   const repo = {
     id,
     title,
     url,
     techs,
+    likes,
   }
 
   repositories[repoIndex] = repo
